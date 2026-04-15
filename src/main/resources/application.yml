@@ -1,0 +1,12 @@
+spring:
+  datasource:
+    url: jdbc:h2:~/code/myloanz
+    username: sa
+    password:
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+  jackson:
+    serialization:
+      indent_output: true
+    property-naming-strategy: SNAKE_CASE
