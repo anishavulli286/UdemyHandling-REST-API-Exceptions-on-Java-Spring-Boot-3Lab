@@ -41,4 +41,12 @@ public class ApiExceptionHandler {
         response.setMessage(e.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }
+
+    @ExceptionHandler({LoanOwnerException.class})
+    ResponseEntity<ExceptionResponse> handleLoanOwnerException(LoanOwnerException e) {
+        var response = new ExceptionResponse();
+        response.setSummary("Got an LoanOwnerException");
+        response.setMessage(e.getMessage());
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(response);
+    }
 }

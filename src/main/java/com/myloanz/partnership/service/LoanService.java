@@ -52,4 +52,8 @@ public class LoanService {
         return result;
     }
 
+    public boolean isLoanIdExist(String loanId) {
+        return repository.existsById(UUID.fromString(loanId));
+    }
+
 }

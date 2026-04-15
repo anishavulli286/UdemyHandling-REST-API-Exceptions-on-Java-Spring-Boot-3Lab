@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import com.myloanz.partnership.exception.LoanBussinessException;
 import java.time.LocalDate;
 import java.time.Period;
+import com.myloanz.partnership.exception.LoanOwnerException;
 
 @RestController
 public class LoanController {
@@ -27,8 +28,8 @@ public class LoanController {
             @RequestBody SubmitLoanRequest loanRequest,
             @RequestHeader(name = HTTP_HEADER_PARTNER_SECRET, required = true) String partnerSecret
     ) {
-        if (loanRequest.getPrincipalAmount() < 100 || loanRequest.getPrincipalAmount() > 9999) {
-            throw new LoanBussinessException("Loan principal amount must be between 100 and 9999" + loanRequest.getPrincipalAmount());
+        if (loanRequest.getPrincipalAmount() < 100 || loanRequest.getPrincipalAmount() > 99999) {
+            throw new LoanBussinessException("Loan principal amount must be between 100 and 9999: " + loanRequest.getPrincipalAmount());
         }
         var age = Period.between(loanRequest.getCustomer().getBirthDate(), LocalDate.now()).getYears();
         if (age < 18 || age > 70) {
@@ -49,6 +50,13 @@ public class LoanController {
     ResponseEntity<Loan> findLoan(@RequestParam(name = "loan_id", required = true) String loanId,
                                   @RequestHeader(name = HTTP_HEADER_PARTNER_SECRET, required = true) String partnerSecret) {
         var existingLoan = loanService.findLoan(loanId, partnerSecret);
+        if (existingLoan == null) {
+            if (loanService.isLoanIdExist(loanId)) {
+                throw new LoanOwnerException("You cannot access loan with this id: " + loanId);
+            } else {
+                throw new LoanBussinessException("Loan: " + loanId + " does not exist");
+            }
+        }
 
         return ResponseEntity.ok().body(existingLoan);
     }
