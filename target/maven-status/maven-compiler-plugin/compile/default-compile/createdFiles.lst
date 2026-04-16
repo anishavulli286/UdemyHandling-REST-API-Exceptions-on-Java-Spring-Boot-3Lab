@@ -1,0 +1,13 @@
+com/myloanz/partnership/exception/LoanOwnerException.class
+com/myloanz/partnership/api/request/SubmitLoanRequest.class
+com/myloanz/partnership/exception/LoanBussinessException.class
+com/myloanz/partnership/repository/LoanRepository.class
+com/myloanz/partnership/api/request/SubmitLoanRequest$Customer.class
+com/myloanz/partnership/controller/LoanController.class
+com/myloanz/partnership/PartnershipApplication.class
+com/myloanz/partnership/exception/ApiExceptionHandler.class
+com/myloanz/partnership/entity/Loan.class
+com/myloanz/partnership/api/response/SubmitLoanResponse.class
+com/myloanz/partnership/service/LoanService.class
+com/myloanz/partnership/api/response/ExceptionResponse.class
+com/myloanz/partnership/api/request/SubmitLoanRequest$Collateral.class
