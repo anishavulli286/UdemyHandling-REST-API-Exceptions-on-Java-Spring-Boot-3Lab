@@ -6,6 +6,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.bind.MethodArgumentNotValidException;
+import java.util.stream.Collectors;
 
 @RestControllerAdvice
 public class ApiExceptionHandler {
@@ -35,7 +37,7 @@ public class ApiExceptionHandler {
     }
 
     @ExceptionHandler({LoanBussinessException.class})
-    ResponseEntity<ExceptionResponse> handleLoanBussinessException(LoanBussinessException e) {
+    public ResponseEntity<ExceptionResponse> handleLoanBussinessException(LoanBussinessException e) {
         var response = new ExceptionResponse();
         response.setSummary("Got an LoanBussinessException");
         response.setMessage(e.getMessage());
@@ -43,10 +45,15 @@ public class ApiExceptionHandler {
     }
 
     @ExceptionHandler({LoanOwnerException.class})
-    ResponseEntity<ExceptionResponse> handleLoanOwnerException(LoanOwnerException e) {
+    public ResponseEntity<ExceptionResponse> handleLoanOwnerException(LoanOwnerException e) {
         var response = new ExceptionResponse();
         response.setSummary("Got an LoanOwnerException");
         response.setMessage(e.getMessage());
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body(response);
+    }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<ExceptionResponse> handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
+        var message = e.getFieldErrors().
     }
 }

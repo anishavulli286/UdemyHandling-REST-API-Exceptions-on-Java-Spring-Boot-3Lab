@@ -28,13 +28,13 @@ public class LoanController {
             @RequestBody SubmitLoanRequest loanRequest,
             @RequestHeader(name = HTTP_HEADER_PARTNER_SECRET, required = true) String partnerSecret
     ) {
-        if (loanRequest.getPrincipalAmount() < 100 || loanRequest.getPrincipalAmount() > 99999) {
-            throw new LoanBussinessException("Loan principal amount must be between 100 and 9999: " + loanRequest.getPrincipalAmount());
-        }
-        var age = Period.between(loanRequest.getCustomer().getBirthDate(), LocalDate.now()).getYears();
-        if (age < 18 || age > 70) {
-            throw new LoanBussinessException("Loan age must be between 18 and 70 years");
-        }
+//        if (loanRequest.getPrincipalAmount() < 100 || loanRequest.getPrincipalAmount() > 99999) {
+//            throw new LoanBussinessException("Loan principal amount must be between 100 and 9999: " + loanRequest.getPrincipalAmount());
+//        }
+//        var age = Period.between(loanRequest.getCustomer().getBirthDate(), LocalDate.now()).getYears();
+//        if (age < 18 || age > 70) {
+//            throw new LoanBussinessException("Loan age must be between 18 and 70 years");
+//        }
         var savedLoan = loanService.saveLoanToDatabase(loanRequest, partnerSecret);
 
         var submitLoanResponse = new SubmitLoanResponse();
