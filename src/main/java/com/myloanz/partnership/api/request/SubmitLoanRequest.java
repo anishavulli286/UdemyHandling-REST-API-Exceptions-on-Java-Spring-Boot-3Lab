@@ -10,6 +10,7 @@ import java.time.LocalDate;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.*;
 import org.hibernate.validator.constraints.Range;
+import com.myloanz.partnership.exception.Age;
 
 public class SubmitLoanRequest {
     @Range(min = 100, max = 99999)
@@ -95,6 +96,7 @@ public class SubmitLoanRequest {
         private String name;
 
         @JsonFormat(pattern = "yyyy-MM-dd")
+        @Age(minAge = 20, maxAge = 50)
         private LocalDate birthDate;
 
         @Min(500)

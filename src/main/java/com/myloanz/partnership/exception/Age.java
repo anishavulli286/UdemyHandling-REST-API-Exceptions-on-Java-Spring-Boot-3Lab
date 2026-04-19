@@ -16,7 +16,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Constraint(validatedBy = AgeValidator.class)
 @Documented
 public @interface Age {
-    String message() default "Customer's age is invalid ({currentAge})" + "Age must be between {minAge} and {maxAge}";
+    String message() default "Customer's age is invalid ({currentAge}). " + "Age must be between {minAge} and {maxAge}";
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
     int minAge();

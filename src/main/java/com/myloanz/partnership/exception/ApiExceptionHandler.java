@@ -32,7 +32,16 @@ public class ApiExceptionHandler {
     public ResponseEntity<ExceptionResponse> handleException(Exception e) {
         var response = new ExceptionResponse();
         response.setSummary("Got an Exception");
-        response.setMessage(e.getClass().toString() + ": " + e.getMessage());
+        String message = e.getMessage();
+        if (e instanceof org.springframework.web.bind.MethodArgumentNotValidException ex) {
+            message = ex.getBindingResult()
+                    .getFieldErrors()
+                    .stream()
+                    .map(org.springframework.validation.FieldError::getDefaultMessage)
+                    .findFirst()
+                    .orElse(message);
+        }
+        response.setMessage(message);
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
     }
 
@@ -51,4 +60,6 @@ public class ApiExceptionHandler {
         response.setMessage(e.getMessage());
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body(response);
     }
+
+
 }
