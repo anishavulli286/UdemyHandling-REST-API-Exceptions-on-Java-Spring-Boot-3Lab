@@ -37,7 +37,7 @@ public class ApiExceptionHandler {
     }
 
     @ExceptionHandler({LoanBussinessException.class})
-    public ResponseEntity<ExceptionResponse> handleLoanBussinessException(LoanBussinessException e) {
+    ResponseEntity<ExceptionResponse> handleLoanBussinessException(LoanBussinessException e) {
         var response = new ExceptionResponse();
         response.setSummary("Got an LoanBussinessException");
         response.setMessage(e.getMessage());
@@ -45,19 +45,10 @@ public class ApiExceptionHandler {
     }
 
     @ExceptionHandler({LoanOwnerException.class})
-    public ResponseEntity<ExceptionResponse> handleLoanOwnerException(LoanOwnerException e) {
+    ResponseEntity<ExceptionResponse> handleLoanOwnerException(LoanOwnerException e) {
         var response = new ExceptionResponse();
         response.setSummary("Got an LoanOwnerException");
         response.setMessage(e.getMessage());
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body(response);
-    }
-
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<ExceptionResponse> handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
-        var message = e.getFieldErrors().stream().map(f -> f.getField() + "Value: " + f.getRejectedValue() +") " + f.getDefaultMessage()).collect(Collectors.joining(", "));
-        var response = new ExceptionResponse();
-        response.setSummary("Invalid input arguments: ");
-        response.setMessage(message);
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }
 }
